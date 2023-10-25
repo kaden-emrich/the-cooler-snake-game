@@ -38,7 +38,7 @@ function moveSnake() {
 }
 
 function updateSnake() {
-    for(let s = 0; s < snake.length; s++) {
+    for(let s = snake.length - 1; s >= 0; s--) {
         squares[snake[s]].classList = ['snake'];
         squares[snake[s]].classList.add('snake-body-top', 'snake-body-bottom', 'snake-body-right', 'snake-body-left');
 
@@ -80,24 +80,29 @@ function init() {
 }
 
 document.addEventListener('keydown', (event) => {
+    console.log(event.key);
     switch(event.key) {
         case 'ArrowUp':
             snakeDirection = 0 - numColumns;
+            moveSnake();
             break;
         case 'ArrowDown':
             snakeDirection = numColumns;
+            moveSnake();
             break;
         case 'ArrowLeft':
             snakeDirection = 0 - 1;
+            moveSnake();
             break;
         case 'ArrowRight':
             snakeDirection = 1;
+            moveSnake();
             break;
-        case 'Space':
+        case ' ':
             snakeLength++;
+            moveSnake();
             break;
     }
-    moveSnake();
 });
 
 init();
