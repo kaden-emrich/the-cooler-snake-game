@@ -1,0 +1,40 @@
+#grid-div {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+#grid-div div {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid black; */
+}
+
+#grid-div br {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.snake-body-top {
+    border-top: 3px solid black;
+}
+.snake-body-bottom {
+    border-bottom: 3px solid black;
+}
+.snake-body-left {
+    border-left: 3px solid black;
+}
+.snake-body-right {
+    border-right: 3px solid black;
+}
+
+.snake {
+    background-color: #00aa00;
+}
+.snake-head {
+    background-color: #007700;
+}
