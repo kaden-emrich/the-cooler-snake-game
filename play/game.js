@@ -62,6 +62,9 @@ function updateSnake() {
             }
             else if(snake[s - 1] == snake[s] - 1) {
                 squares[snake[s]].classList.remove('snake-body-left');
+                if(!squares[snake[s]].classList.contains('snake-body-top')) {
+                    squares[snake[s]].classList.add('snake-corner-top-left');
+                }
             }
             else if(snake[s - 1] == snake[s] + numColumns) {
                 squares[snake[s]].classList.remove('snake-body-bottom');
@@ -80,7 +83,7 @@ function init() {
 }
 
 document.addEventListener('keydown', (event) => {
-    console.log(event.key);
+    //console.log(event.key); // for debugging
     switch(event.key) {
         case 'ArrowUp':
             snakeDirection = 0 - numColumns;

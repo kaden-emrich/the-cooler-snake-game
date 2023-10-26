@@ -1,15 +1,63 @@
+:root {
+    --snake-color: rgb(0, 200, 0);
+    --snake-head-color: rgb(0, 150, 0);
+    --snake-border-size: 5px;
+    --snake-border-color: black;
+
+    --game-background-color: darkgray;
+    --game-grid-color: black;
+}
+
+.snake-body-top {
+    border-top: var(--snake-border-size) solid var(--snake-border-color) !important;
+}
+.snake-body-bottom {
+    border-bottom: var(--snake-border-size) solid var(--snake-border-color) !important;
+}
+.snake-body-left {
+    border-left: var(--snake-border-size) solid var(--snake-border-color) !important;
+}
+.snake-body-right {
+    border-right: var(--snake-border-size) solid var(--snake-border-color) !important;
+}
+
+.snake-corner-top-left {
+    background: 
+        linear-gradient(to right, black 4px, transparent 4px) 0 0,
+        linear-gradient(to right, black 4px, transparent 4px) 0 100%,
+        linear-gradient(to left, black 4px, transparent 4px) 100% 0,
+        linear-gradient(to left, black 4px, transparent 4px) 100% 100%,
+        linear-gradient(to bottom, black 4px, transparent 4px) 0 0,
+        linear-gradient(to bottom, black 4px, transparent 4px) 100% 0,
+        linear-gradient(to top, black 4px, transparent 4px) 0 100%,
+        linear-gradient(to top, black 4px, transparent 4px) 100% 100%;
+}
+
+.snake {
+    background-color: var(--snake-color);
+}
+.snake-head {
+    background-color: var(--snake-head-color);
+}
+
 #grid-div {
     display: flex;
     margin: 0;
     padding: 0;
     flex-wrap: wrap;
+    background-color: var(--game-background-color);
+    border: 2px solid var(--game-grid-color);
 }
 
 #grid-div div {
+    display: block;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* border: 1px solid black; */
+    /* border-top: var(--snake-border-size) solid var(--game-grid-color); */
+    /* border-bottom: var(--snake-border-size) solid var(--game-grid-color); */
+    /* border-left: var(--snake-border-size) solid var(--game-grid-color); */
+    /* border-right: var(--snake-border-size) solid var(--game-grid-color); */
 }
 
 #grid-div br {
@@ -17,24 +65,4 @@
     height: 0;
     margin: 0;
     padding: 0;
-}
-
-.snake-body-top {
-    border-top: 3px solid black;
-}
-.snake-body-bottom {
-    border-bottom: 3px solid black;
-}
-.snake-body-left {
-    border-left: 3px solid black;
-}
-.snake-body-right {
-    border-right: 3px solid black;
-}
-
-.snake {
-    background-color: #00aa00;
-}
-.snake-head {
-    background-color: #007700;
 }
