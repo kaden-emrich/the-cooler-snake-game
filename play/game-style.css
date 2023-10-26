@@ -1,44 +1,91 @@
 :root {
+    --game-background-color: rgb(40, 40, 40);
+
     --snake-color: rgb(0, 200, 0);
     --snake-head-color: rgb(0, 150, 0);
     --snake-border-size: 5px;
     --snake-border-color: black;
-
-    --game-background-color: darkgray;
-    --game-grid-color: black;
 }
 
-.snake-body-top {
-    border-top: var(--snake-border-size) solid var(--snake-border-color) !important;
-}
-.snake-body-bottom {
-    border-bottom: var(--snake-border-size) solid var(--snake-border-color) !important;
-}
-.snake-body-left {
-    border-left: var(--snake-border-size) solid var(--snake-border-color) !important;
-}
-.snake-body-right {
-    border-right: var(--snake-border-size) solid var(--snake-border-color) !important;
+body {
+    margin: 0;
+    padding: 0;
 }
 
-.snake-corner-top-left {
+.snake-top {
     background: 
-        linear-gradient(to right, black 4px, transparent 4px) 0 0,
-        linear-gradient(to right, black 4px, transparent 4px) 0 100%,
-        linear-gradient(to left, black 4px, transparent 4px) 100% 0,
-        linear-gradient(to left, black 4px, transparent 4px) 100% 100%,
-        linear-gradient(to bottom, black 4px, transparent 4px) 0 0,
-        linear-gradient(to bottom, black 4px, transparent 4px) 100% 0,
-        linear-gradient(to top, black 4px, transparent 4px) 0 100%,
-        linear-gradient(to top, black 4px, transparent 4px) 100% 100%;
+    no-repeat linear-gradient(to bottom, var(--snake-color) 0%, var(--snake-color) 100%) 50% 0%;
+    background-size: 80% 90%;
+}
+.snake-bottom {
+    background: 
+    no-repeat linear-gradient(to top, var(--snake-color) 0%, var(--snake-color) 100%) 50% 100%;
+    background-size: 80% 90%;
+}
+.snake-left {
+    background: 
+    no-repeat linear-gradient(to right, var(--snake-color) 0%, var(--snake-color) 100%) 0% 50%;
+    background-size: 90% 80%;
+}
+.snake-right {
+    background: 
+    no-repeat linear-gradient(to right, var(--snake-color) 0%, var(--snake-color) 100%) 100% 50%;
+    background-size: 90% 80%;
+}
+
+.snake-top.snake-bottom {
+    background: 
+    no-repeat linear-gradient(to right, var(--snake-color) 0%, var(--snake-color) 100%) 50% 0%,
+    var(--snake-border-color);
+    background-size: 80% 100%;
+}
+.snake-left.snake-right {
+    background: 
+    no-repeat linear-gradient(to top, var(--snake-color) 0%, var(--snake-color) 100%) 0% 50%,
+    var(--snake-border-color);
+    background-size: 100% 80%;
+}
+
+.snake-top.snake-right {
+    background: 
+    no-repeat linear-gradient(to top, transparent 10%, var(--snake-color) 10%) 50% 0%,
+    no-repeat linear-gradient(to right, transparent 10%, var(--snake-color) 10%) 0% 50%,
+    var(--snake-border-color);
+    background-size: 80% 100%, 100% 80%;
+}
+.snake-right.snake-bottom {
+    background: 
+    no-repeat linear-gradient(to top, var(--snake-color) 90%, var(--snake-border-color) 90%) 50% 100%, 
+    no-repeat linear-gradient(to left, var(--snake-color) 90%, var(--snake-border-color) 90%) 100% 50%,
+    var(--snake-border-color);
+    background-size: 80% 100%, 100% 80%;
+}
+.snake-bottom.snake-left {
+    background: 
+    no-repeat linear-gradient(to top, var(--snake-color) 90%, var(--snake-border-color) 90%) 50% 100%, 
+    no-repeat linear-gradient(to right, var(--snake-color) 90%, var(--snake-border-color) 90%) 100% 50%,
+    var(--snake-border-color);
+    background-size: 80% 100%, 100% 80%;
+}
+.snake-left.snake-top {
+    background: 
+    no-repeat linear-gradient(to bottom, var(--snake-color) 90%, var(--snake-border-color) 90%) 50% 100%, 
+    no-repeat linear-gradient(to right, var(--snake-color) 90%, var(--snake-border-color) 90%) 100% 50%,
+    var(--snake-border-color);
+    background-size: 80% 100%, 100% 80%;
+}
+
+.snake-blob {
+    background: no-repeat linear-gradient(to bottom, var(--snake-color) 0%, var(--snake-color) 100%) 50% 50%;
+    background-size: 80% 80%;
 }
 
 .snake {
-    background-color: var(--snake-color);
+    background-color: var(--snake-border-color);
 }
-.snake-head {
-    background-color: var(--snake-head-color);
-}
+/* .snake-head {
+    /* background-color: var(--snake-head-color); 
+} */
 
 #grid-div {
     display: flex;

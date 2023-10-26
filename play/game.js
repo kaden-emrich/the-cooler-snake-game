@@ -1,16 +1,108 @@
 const MIN_COLUMNS = 10;
 const MIN_ROWS = 10;
 
-var rootEl = document.querySelector(':root');
+//var rootEl = document.querySelector(':root');
 var gridDiv = document.getElementById('grid-div');
 
-var numColumns = 10;
-var numRows = 10;
+var numColumns = 15;
+var numRows = 15;
 
 var squares = [];
-var snake = [2, 1, 0];
+var snake = [0];
 var snakeLength = 3;
 var snakeDirection = 1;
+
+function moveSnake() {
+    if(!testValidMove(snake[0], snakeDirection)) {
+        console.log('Invalid move!'); // for debugging
+        return;
+    }
+
+    let nextSquare = snake[0] + snakeDirection;
+    squares[snake[0]].classList.remove('snake-head');
+    snake.unshift(nextSquare);
+    while(snake.length > snakeLength) {
+        squares[snake.pop()].classList.remove('snake', 'snake-head', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left');
+    }
+    updateSnake();
+}
+
+function updateSnake() {
+    for(let s = snake.length - 1; s >= 0; s--) {
+        squares[snake[s]].classList = ['snake'];
+        // squares[snake[s]].classList.add('snake-body-top', 'snake-body-bottom', 'snake-body-right', 'snake-body-left');
+        var noBorderClass = false;
+
+        if(s > 0) {
+            if(snake[s - 1] == snake[s] + 1) {
+                squares[snake[s]].classList.add('snake-right');
+            }
+            else if(snake[s - 1] == snake[s] - 1) {
+                squares[snake[s]].classList.add('snake-left');
+            }
+            else if(snake[s - 1] == snake[s] + numColumns) {
+                squares[snake[s]].classList.add('snake-bottom');
+            }
+            else if(snake[s - 1] == snake[s] - numColumns) {
+                squares[snake[s]].classList.add('snake-top');
+            }
+            else {
+                noBorderClass = true;
+            }
+        }
+        else {
+            noBorderClass = true;
+        }
+        if(s < snake.length) {
+            if(snake[s + 1] == snake[s] + 1) {
+                squares[snake[s]].classList.add('snake-right');
+            }
+            else if(snake[s + 1] == snake[s] - 1) {
+                squares[snake[s]].classList.add('snake-left');
+            }
+            else if(snake[s + 1] == snake[s] + numColumns) {
+                squares[snake[s]].classList.add('snake-bottom');
+            }
+            else if(snake[s + 1] == snake[s] - numColumns) {
+                squares[snake[s]].classList.add('snake-top');
+            }
+            else {
+                if(noBorderClass) {
+                    squares[snake[s]].classList.add('snake-blob');
+                }
+            }
+        }
+    }
+    squares[snake[0]].classList.add('snake-head');
+}
+
+function testValidMove(currentPosition, direction) {
+    let nextPosition = currentPosition + direction;
+    if(!testValidPosition(nextPosition)) {
+        return false;
+    }
+
+    if((currentPosition + 1) % numColumns == 0 && direction == 1) {
+        return false;
+    }
+    if((nextPosition + 1) % numColumns == 0 && direction == -1) {
+        return false;
+    }
+
+    return true;
+}
+
+function testValidPosition(position) {
+    if(position < 0 || position >= squares.length) {
+        return false;
+    }
+
+    if(squares[position].classList.contains('snake')) {
+        return false;
+    }
+
+    return true;
+}
 
 function initGrid() {
     numColumns = numColumns < MIN_COLUMNS ? MIN_COLUMNS : numColumns;
@@ -27,58 +119,15 @@ function initGrid() {
     }
 }
 
-function moveSnake() {
-    let nextSpot = snake[0] + snakeDirection;
-    squares[snake[0]].classList.remove('snake-head');
-    snake.unshift(nextSpot);
-    while(snake.length > snakeLength) {
-        squares[snake.pop()].classList.remove('snake', 'snake-head', 'snake-body-top', 'snake-body-bottom', 'snake-body-right', 'snake-body-left');
-    }
-    updateSnake();
-}
-
-function updateSnake() {
-    for(let s = snake.length - 1; s >= 0; s--) {
-        squares[snake[s]].classList = ['snake'];
-        squares[snake[s]].classList.add('snake-body-top', 'snake-body-bottom', 'snake-body-right', 'snake-body-left');
-
-        if(s < snake.length) {
-            if(snake[s + 1] == snake[s] + 1) {
-                squares[snake[s]].classList.remove('snake-body-right');
-            }
-            else if(snake[s + 1] == snake[s] - 1) {
-                squares[snake[s]].classList.remove('snake-body-left');
-            }
-            else if(snake[s + 1] == snake[s] + numColumns) {
-                squares[snake[s]].classList.remove('snake-body-bottom');
-            }
-            else if(snake[s + 1] == snake[s] - numColumns) {
-                squares[snake[s]].classList.remove('snake-body-top');
-            }
-        }
-        if(s > 0) {
-            if(snake[s - 1] == snake[s] + 1) {
-                squares[snake[s]].classList.remove('snake-body-right');
-            }
-            else if(snake[s - 1] == snake[s] - 1) {
-                squares[snake[s]].classList.remove('snake-body-left');
-                if(!squares[snake[s]].classList.contains('snake-body-top')) {
-                    squares[snake[s]].classList.add('snake-corner-top-left');
-                }
-            }
-            else if(snake[s - 1] == snake[s] + numColumns) {
-                squares[snake[s]].classList.remove('snake-body-bottom');
-            }
-            else if(snake[s - 1] == snake[s] - numColumns) {
-                squares[snake[s]].classList.remove('snake-body-top');
-            }
-        }
-    }
-    squares[snake[0]].classList.add('snake-head');
+function initSnake() {
+    let start = Math.floor((numRows / 2)) * numColumns + Math.floor(numColumns / 4);
+    snake = [start];
+    snakeLength = 2;
 }
 
 function init() {
     initGrid();
+    initSnake();
     updateSnake();
 }
 
