@@ -3,23 +3,35 @@ const MIN_ROWS = 10;
 
 //var rootEl = document.querySelector(':root');
 var gridDiv = document.getElementById('grid-div');
+var menuLayer = document.getElementById('menus-div');
+var playButton = document.getElementById('play-button');
+var titleText = document.getElementById('title-text');
 
 var numColumns = 15;
 var numRows = 15;
 
+var startSnakeLength = 2;
+
 var squares = [];
 var snake = [0];
-var snakeLength = 3;
+var snakeLength = 2;
 var snakeDirection = 1;
 
 var snakeSpeedMs = 300;
 var snakeInterval;
+var isPaused = true;
+
+function getScore() {
+    return snakeLength - startSnakeLength;
+}
 
 function moveSnake() {
     if(!testValidMove(snake[0], snakeDirection)) {
-        console.log('Invalid move!'); // for debugging
+        //console.log('Invalid move!'); // for debugging
         clearInterval(snakeInterval);
-        alert('You lose');
+        isPaused = true;
+        titleText.innerText = `You lose. Your score: ${getScore()}`;
+        menuLayer.style.display = 'block';
         return;
     }
 
@@ -34,7 +46,7 @@ function moveSnake() {
     squares[snake[0]].classList.remove('snake-head');
     snake.unshift(nextSquare);
     while(snake.length > snakeLength) {
-        squares[snake.pop()].classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left');
+        squares[snake.pop()].classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'snake-blob');
     }
     updateSnake();
 }
@@ -94,19 +106,26 @@ function startSnake() {
 }
 
 function randomApple() {
-    let appleIndex;
+    let appleIndex = -1;
     do {
         appleIndex = Math.floor(Math.random() * squares.length);
-    } while(!testValidPosition(appleIndex));
+    } while(!createApple(appleIndex));
 
-    squares[appleIndex].classList.add('apple');
-    console.log(`spawned apple at ${appleIndex}`);
+    //console.log(`spawned apple at ${appleIndex}`); // for debugging
+}
+
+function firstApple() {
+    if(!createApple(snake[0] + 5)) {
+        randomApple();
+    }
 }
 
 function createApple(index) {
     if(testValidPosition(index)) {
         squares[index].classList.add('apple');
+        return true;
     }
+    return false;
 }
 
 function testValidMove(currentPosition, direction) {
@@ -126,11 +145,26 @@ function testValidMove(currentPosition, direction) {
 }
 
 function testValidPosition(position) {
+    if(!squares[position]) {
+        return false;
+    }
+
     if(position < 0 || position >= squares.length) {
         return false;
     }
 
     if(squares[position].classList.contains('snake')) {
+        return false;
+    }
+
+    return true;
+}
+
+function testEmptyPosition(position) {
+    if(!testValidMove(position)) {
+        return false;
+    }
+    if(squares[position].classList.contains('apple')) {
         return false;
     }
 
@@ -155,21 +189,33 @@ function initGrid() {
 function initSnake() {
     let start = Math.floor((numRows / 2)) * numColumns + Math.floor(numColumns / 4);
     snake = [start];
-    snakeLength = 2;
+    snakeLength = startSnakeLength;
+    snakeDirection = 1;
 
     startSnake();
 }
 
-function init() {
-    initGrid();
+function newGame() {
+    for(let square of squares) {
+        square.classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'apple', 'snake-blob');
+    }
+    isPaused = false;
     initSnake();
     updateSnake();
-    randomApple();
+    firstApple();
+}
+
+function init() {
+    initGrid();
+    //newGame();
 }
 
 document.addEventListener('keydown', (event) => {
     //console.log(event.key); // for debugging
     let lastDirection = snakeDirection;
+    if(isPaused) {
+        return;
+    }
 
     switch(event.key) {
         case 'ArrowUp':
@@ -221,6 +267,11 @@ document.addEventListener('keydown', (event) => {
         //     moveSnake();
         //     break;
     }
+});
+
+playButton.addEventListener('click', () => {
+    newGame();
+    menuLayer.style.display = 'none';
 });
 
 init();
