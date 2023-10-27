@@ -45,7 +45,7 @@ function moveSnake() {
     squares[snake[0]].classList.remove('snake-head');
     snake.unshift(nextSquare);
     while(snake.length > snakeLength) {
-        squares[snake.pop()].classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'snake-blob');
+        squares[snake.pop()].classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'snake-blob', 'snake-head');
     }
     updateSnake();
 }
@@ -95,6 +95,7 @@ function updateSnake() {
             }
         }
     }
+    //squares[snake[0]].classList.add('snake-head');
 }
 
 function startSnake() {
@@ -205,7 +206,7 @@ function initSnake() {
 
 function newGame() {
     for(let square of squares) {
-        square.classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'apple', 'snake-blob');
+        square.classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'apple', 'snake-blob', 'snake-head');
     }
     isPaused = false;
     initSnake();

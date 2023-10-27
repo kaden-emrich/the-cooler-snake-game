@@ -4,7 +4,6 @@
 
     --snake-color: rgb(0, 200, 0);
     --snake-head-color: rgb(0, 150, 0);
-    --snake-border-size: 5px;
     --snake-border-color: var(--game-background-color);
 
     --apple-color: rgb(250, 0, 0);
@@ -132,6 +131,10 @@ body {
 
 .snake {
     background-color: var(--snake-border-color);
+}
+
+.snake-head {
+    background: var(--snake-color) !important;
 }
 
 .apple {
