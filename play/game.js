@@ -1,14 +1,13 @@
-const MIN_COLUMNS = 10;
-const MIN_ROWS = 10;
+const MIN_SIZE = 10;
 
-//var rootEl = document.querySelector(':root');
+var urlParams = new URLSearchParams(window.location.search);
+
 var gridDiv = document.getElementById('grid-div');
 var menuLayer = document.getElementById('menus-div');
 var playButton = document.getElementById('play-button');
 var titleText = document.getElementById('title-text');
 
-var numColumns = 15;
-var numRows = 15;
+var numColumns = numRows = 15;
 
 var startSnakeLength = 2;
 
@@ -181,8 +180,8 @@ function testEmptyPosition(position) {
 }
 
 function initGrid() {
-    numColumns = numColumns < MIN_COLUMNS ? MIN_COLUMNS : numColumns;
-    numRows = numRows < MIN_ROWS ? MIN_ROWS : numRows;
+    numColumns = numColumns < MIN_SIZE ? MIN_SIZE : numColumns;
+    numRows = numRows < MIN_SIZE ? MIN_SIZE : numRows;
 
     for(let row = 0; row < numRows; row++) {
         for(let column = 0; column < numColumns; column++) {
@@ -214,7 +213,14 @@ function newGame() {
     firstApple();
 }
 
+function getUrlItems() {
+    if(parseInt(urlParams.get('game-size'))) {
+        numColumns = numRows = parseInt(urlParams.get('game-size')) >= MIN_SIZE ? parseInt(urlParams.get('game-size')) : MIN_SIZE;
+    }
+}
+
 function init() {
+    getUrlItems();
     initGrid();
     //newGame();
 }
@@ -228,6 +234,8 @@ document.addEventListener('keydown', (event) => {
 
     switch(event.key) {
         case 'ArrowUp':
+        case 'w':
+        case 'W':
             snakeDirection = 0 - numColumns;
 
             if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
@@ -239,6 +247,8 @@ document.addEventListener('keydown', (event) => {
             // moveSnake();
             break;
         case 'ArrowDown':
+        case 's':
+        case 'S':
             snakeDirection = numColumns;
 
             if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
@@ -250,6 +260,8 @@ document.addEventListener('keydown', (event) => {
             // moveSnake();
             break;
         case 'ArrowLeft':
+        case 'a':
+        case 'A':
             snakeDirection = 0 - 1;
 
             if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
@@ -261,6 +273,8 @@ document.addEventListener('keydown', (event) => {
             // moveSnake();
             break;
         case 'ArrowRight':
+        case 'd':
+        case 'D':
             snakeDirection = 1;
 
             if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
