@@ -147,7 +147,8 @@ body {
     padding: 0;
     flex-wrap: wrap;
     background-color: var(--game-background-color);
-    border: 10px inset var(--game-border-color);
+    border: 10px solid var(--game-background-color);
+    outline: 10px inset var(--game-border-color);
 }
 
 #grid-div div {
