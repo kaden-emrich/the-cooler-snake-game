@@ -47,6 +47,17 @@ function moveSnake() {
     while(snake.length > snakeLength) {
         squares[snake.pop()].classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'snake-blob', 'snake-head');
     }
+    
+    let isApple = false;
+    for(let i = 0; i < squares.length; i++) {
+        if(squares[i].classList.contains('apple')) {
+            isApple = true;
+        }
+    }
+    if(!isApple) {
+        randomApple();
+    }
+
     updateSnake();
 }
 
