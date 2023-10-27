@@ -121,11 +121,20 @@ function firstApple() {
 }
 
 function createApple(index) {
+    let isApple = false;
+
     if(testValidPosition(index)) {
         squares[index].classList.add('apple');
-        return true;
+
+        
+        for(let i = 0; i < squares.length; i++) {
+            if(squares[i].classList.contains('apple')) {
+                isApple = true;
+            }
+        }
     }
-    return false;
+
+    return isApple;
 }
 
 function testValidMove(currentPosition, direction) {
