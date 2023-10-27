@@ -5,6 +5,8 @@ var urlParams = new URLSearchParams(window.location.search);
 var gridDiv = document.getElementById('grid-div');
 var menuLayer = document.getElementById('menus-div');
 var titleText = document.getElementById('title-text');
+var mainMenu = document.getElementById('main-menu');
+var pauseMenu = document.getElementById('pause-menu');
 
 var numColumns = numRows = 15;
 
@@ -15,9 +17,14 @@ var snake = [0];
 var snakeLength = 2;
 var snakeDirection = 1;
 
+var growMultiplyer = 1;
+
 var snakeSpeedMs = 300;
 var snakeInterval;
 var isPaused = true;
+var isMainMenu = true;
+
+var deathBuffer = 0;
 
 function getScore() {
     return snakeLength - startSnakeLength;
@@ -25,19 +32,22 @@ function getScore() {
 
 function moveSnake() {
     if(!testValidMove(snake[0], snakeDirection)) {
-        //console.log('Invalid move!'); // for debugging
-        clearInterval(snakeInterval);
-        isPaused = true;
-        titleText.innerText = `You lose. Your score: ${getScore()}`;
-        menuLayer.style.display = 'block';
+        if(deathBuffer >= 1) {
+            endGame();
+        }
+        else {
+            deathBuffer++;
+        }
         return;
     }
+
+    deathBuffer = 0;
 
     let nextSquare = snake[0] + snakeDirection;
 
     if(squares[nextSquare].classList.contains('apple')) {
         squares[nextSquare].classList.remove('apple');
-        snakeLength++;
+        snakeLength += growMultiplyer;
         randomApple();
     }
 
@@ -209,9 +219,9 @@ function initSnake() {
     let start = Math.floor((numRows / 2)) * numColumns + Math.floor(numColumns / 4);
     snake = [start];
     snakeLength = startSnakeLength;
-    snakeDirection = 1;
+    snakeDirection = 0;
 
-    startSnake();
+    //startSnake();
 }
 
 function destroyGame() {
@@ -226,6 +236,7 @@ function newGame(width, height) {
     numRows = height >= MIN_SIZE ? height : MIN_SIZE; 
     initGrid();
     isPaused = false;
+    isMainMenu = false;
     menuLayer.style.display = 'none';
 
     initSnake();
@@ -239,6 +250,33 @@ function getUrlItems() {
     }
 }
 
+function pause() {
+    isPaused = true;
+    clearInterval(snakeInterval);
+    mainMenu.style.display = 'none';
+    pauseMenu.style.display = 'flex';
+    menuLayer.style.display = 'block';
+}
+
+function unpause() {
+    if(snakeDirection != 0) {
+        startSnake();
+    }
+    isPaused = false;
+    mainMenu.style.display = 'none';
+    pauseMenu.style.display = 'none';
+    menuLayer.style.display = 'none';
+}
+
+function endGame() {
+    clearInterval(snakeInterval);
+    isPaused = true;
+    titleText.innerText = `GAME OVER. Your score: ${getScore()}`;
+    mainMenu.style.display = 'flex';
+    menuLayer.style.display = 'block';
+    isMainMenu = true;
+}
+
 function init() {
     getUrlItems();
     //newGame();
@@ -247,7 +285,8 @@ function init() {
 document.addEventListener('keydown', (event) => {
     //console.log(event.key); // for debugging
     let lastDirection = snakeDirection;
-    if(isPaused) {
+
+    if(isPaused && !(event.key == ' ' || event.key == 'Escape')) {
         return;
     }
 
@@ -304,9 +343,14 @@ document.addEventListener('keydown', (event) => {
             }
             // moveSnake();
             break;
-        // case ' ':
-        //     snakeLength++;
-        //     moveSnake();
-        //     break;
+        case ' ':
+        case 'Escape':
+            if(isMainMenu) break;
+            if(isPaused) {
+                unpause();
+            }
+            else {
+                pause();
+            }
     }
 });

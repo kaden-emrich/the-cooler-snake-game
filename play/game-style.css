@@ -35,9 +35,10 @@ body {
     margin: 0;
     padding: 0;
     backdrop-filter: brightness(80%);
+    overflow: hidden;
 }
 
-#main-menu {
+.menu {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -46,11 +47,14 @@ body {
     backdrop-filter: blur(4px);
 }
 
-#title-text {
+h1 {
     font-size: 7vw;
     font-weight: 900;
     color: white;
+    text-align: center;
 }
+
+
 
 .play-button {
     font-size: 10vw;
@@ -61,10 +65,12 @@ body {
     border: 8px outset var(--game-border-color);
     color: var(--snake-color);
 }
-
-#play-button:hover {
+.play-button:hover {
     border: 8px inset var(--game-border-color);
     color: var(--apple-color);
+}
+.play-button:active {
+    filter: brightness(50%);
 }
 
 .snake-top {
@@ -160,6 +166,7 @@ body {
     height: 100%;
     flex-wrap: wrap;
     background-color: var(--game-background-color);
+    cursor: none;
     /* border: 10px solid var(--game-background-color);
     outline: 10px inset var(--game-border-color); */
 }

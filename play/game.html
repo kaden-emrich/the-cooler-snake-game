@@ -11,11 +11,16 @@
     <div id="game" style="width: 100vw; height: 100vh;">
         <div id="grid-div"></div>
         <div id="menus-div">
-            <div id="main-menu">
+            <div id="main-menu" class="menu">
                 <h1 id="title-text">Snake By Kaden</h1>
                 <button class="play-button" onclick="newGame(10, 10)">SMALL</button>
                 <button class="play-button" onclick="newGame(16, 16)">NORMAL</button>
                 <button class="play-button" onclick="newGame(24, 24)">LARGE</button>
+            </div>
+            <div id="pause-menu" class="menu" style="display: none;">
+                <h1>Paused</h1>
+                <button class="play-button" onclick="unpause()">CONTINUE</button>
+                <button class="play-button" onclick="unpause()">END GAME</button>
             </div>
         </div>
     </div>
