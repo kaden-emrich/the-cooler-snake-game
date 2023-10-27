@@ -12,17 +12,29 @@ var snake = [0];
 var snakeLength = 3;
 var snakeDirection = 1;
 
+var snakeSpeedMs = 300;
+var snakeInterval;
+
 function moveSnake() {
     if(!testValidMove(snake[0], snakeDirection)) {
         console.log('Invalid move!'); // for debugging
+        clearInterval(snakeInterval);
+        alert('You lose');
         return;
     }
 
     let nextSquare = snake[0] + snakeDirection;
+
+    if(squares[nextSquare].classList.contains('apple')) {
+        squares[nextSquare].classList.remove('apple');
+        snakeLength++;
+        randomApple();
+    }
+
     squares[snake[0]].classList.remove('snake-head');
     snake.unshift(nextSquare);
     while(snake.length > snakeLength) {
-        squares[snake.pop()].classList.remove('snake', 'snake-head', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left');
+        squares[snake.pop()].classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left');
     }
     updateSnake();
 }
@@ -30,7 +42,6 @@ function moveSnake() {
 function updateSnake() {
     for(let s = snake.length - 1; s >= 0; s--) {
         squares[snake[s]].classList = ['snake'];
-        // squares[snake[s]].classList.add('snake-body-top', 'snake-body-bottom', 'snake-body-right', 'snake-body-left');
         var noBorderClass = false;
 
         if(s > 0) {
@@ -73,7 +84,29 @@ function updateSnake() {
             }
         }
     }
-    squares[snake[0]].classList.add('snake-head');
+}
+
+function startSnake() {
+    clearInterval(snakeInterval);
+    snakeInterval = setInterval(() => {
+        moveSnake();
+    }, snakeSpeedMs);
+}
+
+function randomApple() {
+    let appleIndex;
+    do {
+        appleIndex = Math.floor(Math.random() * squares.length);
+    } while(!testValidPosition(appleIndex));
+
+    squares[appleIndex].classList.add('apple');
+    console.log(`spawned apple at ${appleIndex}`);
+}
+
+function createApple(index) {
+    if(testValidPosition(index)) {
+        squares[index].classList.add('apple');
+    }
 }
 
 function testValidMove(currentPosition, direction) {
@@ -123,37 +156,70 @@ function initSnake() {
     let start = Math.floor((numRows / 2)) * numColumns + Math.floor(numColumns / 4);
     snake = [start];
     snakeLength = 2;
+
+    startSnake();
 }
 
 function init() {
     initGrid();
     initSnake();
     updateSnake();
+    randomApple();
 }
 
 document.addEventListener('keydown', (event) => {
     //console.log(event.key); // for debugging
+    let lastDirection = snakeDirection;
+
     switch(event.key) {
         case 'ArrowUp':
             snakeDirection = 0 - numColumns;
-            moveSnake();
+
+            if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
+                moveSnake();
+                startSnake();
+            } else {
+                snakeDirection = lastDirection;
+            }
+            // moveSnake();
             break;
         case 'ArrowDown':
             snakeDirection = numColumns;
-            moveSnake();
+
+            if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
+                moveSnake();
+                startSnake();
+            } else {
+                snakeDirection = lastDirection;
+            }
+            // moveSnake();
             break;
         case 'ArrowLeft':
             snakeDirection = 0 - 1;
-            moveSnake();
+
+            if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
+                moveSnake();
+                startSnake();
+            } else {
+                snakeDirection = lastDirection;
+            }
+            // moveSnake();
             break;
         case 'ArrowRight':
             snakeDirection = 1;
-            moveSnake();
+
+            if(Math.abs(snakeDirection) != Math.abs(lastDirection)) {
+                moveSnake();
+                startSnake();
+            } else {
+                snakeDirection = lastDirection;
+            }
+            // moveSnake();
             break;
-        case ' ':
-            snakeLength++;
-            moveSnake();
-            break;
+        // case ' ':
+        //     snakeLength++;
+        //     moveSnake();
+        //     break;
     }
 });
 

@@ -5,6 +5,8 @@
     --snake-head-color: rgb(0, 150, 0);
     --snake-border-size: 5px;
     --snake-border-color: var(--game-background-color);
+
+    --apple-color: rgb(200, 0, 0);
 }
 
 body {
@@ -83,9 +85,13 @@ body {
 .snake {
     background-color: var(--snake-border-color);
 }
-/* .snake-head {
-    /* background-color: var(--snake-head-color); 
-} */
+
+.apple {
+    background: 
+    no-repeat linear-gradient(to top, var(--apple-color) 0%, var(--apple-color) 100%) 50% 50%,
+    var(--game-background-color);
+    background-size: 50% 50%;
+}
 
 #grid-div {
     display: flex;
