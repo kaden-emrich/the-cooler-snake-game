@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <link rel="stylesheet" href="game-style.css">
+    <script src="game.js" onload="init()" defer></script>
+</head>
+<body>
+    <div id="game" style="width: 100vw; height: 100vh;">
+        <div id="grid-div"></div>
+        <div id="menus-div">
+            <div id="main-menu">
+                <h1 id="title-text">Snake By Kaden</h1>
+                <button class="play-button" onclick="newGame(10, 10)">SMALL</button>
+                <button class="play-button" onclick="newGame(16, 16)">NORMAL</button>
+                <button class="play-button" onclick="newGame(24, 24)">LARGE</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,7 +4,6 @@ var urlParams = new URLSearchParams(window.location.search);
 
 var gridDiv = document.getElementById('grid-div');
 var menuLayer = document.getElementById('menus-div');
-var playButton = document.getElementById('play-button');
 var titleText = document.getElementById('title-text');
 
 var numColumns = numRows = 15;
@@ -215,11 +214,20 @@ function initSnake() {
     startSnake();
 }
 
-function newGame() {
-    for(let square of squares) {
-        square.classList.remove('snake', 'snake-top', 'snake-bottom', 'snake-right', 'snake-left', 'apple', 'snake-blob', 'snake-head');
-    }
+function destroyGame() {
+    gridDiv.innerHTML = '';
+    squares = [];
+    clearInterval(snakeInterval);
+}
+
+function newGame(width, height) {
+    destroyGame();
+    numColumns = width >= MIN_SIZE ? width : MIN_SIZE;
+    numRows = height >= MIN_SIZE ? height : MIN_SIZE; 
+    initGrid();
     isPaused = false;
+    menuLayer.style.display = 'none';
+
     initSnake();
     updateSnake();
     firstApple();
@@ -233,7 +241,6 @@ function getUrlItems() {
 
 function init() {
     getUrlItems();
-    initGrid();
     //newGame();
 }
 
@@ -303,10 +310,3 @@ document.addEventListener('keydown', (event) => {
         //     break;
     }
 });
-
-playButton.addEventListener('click', () => {
-    newGame();
-    menuLayer.style.display = 'none';
-});
-
-init();

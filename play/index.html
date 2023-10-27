@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake</title>
+    <title>Snake Game</title>
     <link rel="stylesheet" href="game-style.css">
-    <script src="game.js" defer></script>
+
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, rgb(150, 150, 150) 0%, rgb(120, 120, 120) 100%);
+        }
+
+        #game-frame {
+            box-sizing: border-box;
+            width: 80vh;
+            height: 80vh;
+            background-color: gray;
+            border: 10px solid var(--game-background-color);
+            outline: 15px inset var(--game-border-color);
+        }
+
+    </style>
 </head>
 <body>
-    <div id="grid-div" style="height: 60vh; width: 60vh;"></div>
-    <div id="menus-div">
-        <div id="main-menu">
-            <h1 id="title-text">Snake By Kaden</h1>
-            <button id="play-button">PLAY</button>
-        </div>
-    </div>
+    <iframe id="game-frame" src="game.html?game-size=10" frameborder="0"></iframe>
 </body>
 </html>
