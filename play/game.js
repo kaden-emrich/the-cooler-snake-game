@@ -115,7 +115,7 @@ function updateSnake() {
             }
         }
     }
-    //squares[snake[0]].classList.add('snake-head');
+    squares[snake[0]].classList.add('snake-head');
 }
 
 function startSnake() {
