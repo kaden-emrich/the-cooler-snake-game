@@ -1,0 +1,159 @@
+:root {
+    --game-background-color: rgb(40, 40, 40);
+    --game-border-color: rgb(100, 100, 100);
+
+    --off-screen-color: rgb(30, 30, 30);
+
+    --snake-color: rgb(0, 200, 0);
+    --snake-border-color: var(--game-background-color);
+
+    --apple-color: rgb(250, 0, 0);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--off-screen-color);
+    font-family: monospace;
+    image-rendering: pixelated;
+}
+
+#game {
+    position: relative;
+}
+
+#menus-div {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    backdrop-filter: brightness(80%);
+    overflow: hidden;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+h1 {
+    font-size: 7vw;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+}
+
+
+
+.play-button {
+    font-size: 10vw;
+    font-family: monospace;
+    margin: 1vw;
+    font-weight: 900;
+    background-color: var(--game-background-color);
+    border: 8px outset var(--game-border-color);
+    color: var(--snake-color);
+}
+.play-button:hover {
+    border: 8px inset var(--game-border-color);
+    color: var(--apple-color);
+}
+.play-button:active {
+    filter: brightness(50%);
+}
+
+.snake-top {
+    background-image: url('/snake-parts/snake-top.png');
+    background-size: 100%;
+}
+.snake-bottom {
+    background-image: url('/snake-parts/snake-bottom.png');
+    background-size: 100%;
+}
+.snake-left {
+    background-image: url('/snake-parts/snake-left.png');
+    background-size: 100%;
+}
+.snake-right {
+    background-image: url('/snake-parts/snake-right.png');
+    background-size: 100%;
+}
+
+.snake-top.snake-bottom {
+    background-image: url('/snake-parts/snake-top-bottom.png');
+    background-size: 100%;
+}
+.snake-left.snake-right {
+    background-image: url('/snake-parts/snake-left-right.png');
+    background-size: 100%;
+}
+
+.snake-top.snake-right {
+    background-image: url('/snake-parts/snake-top-right.png');
+    background-size: 100%;
+}
+.snake-right.snake-bottom {
+    background-image: url('/snake-parts/snake-bottom-right.png');
+    background-size: 100%;
+}
+.snake-bottom.snake-left {
+    background-image: url('/snake-parts/snake-bottom-left.png');
+    background-size: 100%;
+}
+.snake-left.snake-top {
+    background-image: url('/snake-parts/snake-top-left.png');
+    background-size: 100%;
+}
+.snake-blob {
+    background-image: url('/snake-parts/snake-blob.png');
+    background-size: 100%;
+}
+
+.snake {
+    background-color: var(--snake-border-color);
+}
+
+.snake-head {
+    background-color: var(--snake-border-color);
+}
+
+.apple {
+    background-image: url('/snake-parts/apple.png');
+    background-size: 100%;
+}
+
+#grid-div {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+    background-color: var(--game-background-color);
+    cursor: none;
+}
+
+#grid-div div {
+    display: block;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#grid-div br {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}

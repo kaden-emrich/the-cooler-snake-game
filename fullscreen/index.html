@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+
+    <link rel="stylesheet" href="game-style.css">
+    <link rel="shortcut icon" href="/snake-parts/apple-new.png" type="image/x-icon">
+
+    <link rel="preload" as="image" href="/snake-parts/apple.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-blob.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-bottom-left.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-bottom-right.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-bottom.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-left-right.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-left.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-right.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-top-bottom.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-top-left.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-top-right.png">
+    <link rel="preload" as="image" href="/snake-parts/snake-top.png">
+
+    <script src="game.js" onload="init()" defer></script>
+    <!-- <script src="hamilton.js" defer></script> -->
+</head>
+<body>
+    <div id="game" style="width: 100vw; height: 100vh;">
+        <div id="grid-div"></div>
+        <div id="menus-div">
+            <div id="main-menu" class="menu">
+                <h1 id="title-text">Snake By Kaden</h1>
+                <button class="play-button" onclick="newFullscreenGame()">START</button>
+            </div>
+            <div id="pause-menu" class="menu" style="display: none;">
+                <h1>Paused</h1>
+                <button class="play-button" onclick="unpause()">CONTINUE</button>
+                <button class="play-button" onclick="newFullscreenGame()">RESTART</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
