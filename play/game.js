@@ -283,6 +283,10 @@ function init() {
 }
 
 document.addEventListener('keydown', (event) => {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+        event.preventDefault();
+    }
+    
     //console.log(event.key); // for debugging
     let lastDirection = snakeDirection;
 
